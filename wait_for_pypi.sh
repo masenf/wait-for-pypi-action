@@ -3,17 +3,21 @@ set -eux
 
 PACKAGE_NAME=$1
 PACKAGE_VERSION=$2
-TIMEOUT=$3
-DELAY_BETWEEN_REQUESTS=$4
+TIMEOUT=${3-30}
+DELAY_BETWEEN_REQUESTS=${4-1}
 
-declare URL=https://pypi.org/project/$PACKAGE_NAME/$PACKAGE_VERSION/
+declare URL=https://pypi.org/simple/$PACKAGE_NAME/
 
 DELAY_BETWEEN_REQUESTS=$DELAY_BETWEEN_REQUESTS \
-URL=$URL STATUS=200 timeout \
+  PACKAGE_NAME=$PACKAGE_NAME \
+  PACKAGE_VERSION=$PACKAGE_VERSION \
+  URL=$URL \
+  FOUND=0 \
+  timeout \
   --foreground -s TERM $TIMEOUT bash -c \
-    'while [[ ${STATUS_RECEIVED} != ${STATUS} ]];\
-        do STATUS_RECEIVED=$(curl -s -o /dev/null -L -w ''%{http_code}'' ${URL}) && \
-        echo "received status: $STATUS_RECEIVED" && \
-        sleep $DELAY_BETWEEN_REQUESTS;\
+    'while [[ $FOUND -eq 0 ]]; do
+        FOUND=$(curl -s -L ${URL} | grep "$PACKAGE_VERSION" | wc -l)
+        echo "found: $FOUND"
+        sleep $DELAY_BETWEEN_REQUESTS;
     done;
-    echo success with status: $STATUS_RECEIVED'
+    echo "success with package: $PACKAGE_NAME@$PACKAGE_VERSION"'
