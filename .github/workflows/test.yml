@@ -1,0 +1,15 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: databutton/wait-for-pypi-action@main
+        with:
+          package_name: databutton2
+          package_version: 0.6.19
+          timeout: 30
+          delay_between_requests: 1

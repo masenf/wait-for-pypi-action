@@ -1,0 +1,28 @@
+name: Wait for pypi
+description: Wait a certain time for a pypi package to become available.
+inputs:
+  package_name:
+    description: Name of the pypi package
+    required: true
+  package_version:
+    description: Version of the package
+    required: true
+  timeout:
+    description: How long the action should wait in seconds
+    required: false
+    default: "30"
+  delay_between_requests:
+    description: Delay between requests in seconds
+    required: false
+    default: "1"
+runs:
+  using: 'composite'
+  steps:
+    - name: Waiting for ${{ inputs.package_name }}==${{ inputs.version }}
+      run: |
+          $GITHUB_ACTION_PATH/wait_for_pypi.sh \
+          ${{ inputs.package_name }} \
+          ${{ inputs.package_version }} \
+          ${{ inputs.timeout }} \
+          ${{ inputs.delay_between_requests }}
+      shell: bash
