@@ -18,4 +18,5 @@ DELAY_BETWEEN_REQUESTS=$DELAY_BETWEEN_REQUESTS \
     'while pip download $PACKAGE_NAME==$PACKAGE_VERSION --no-deps -d /tmp/databutton; [ $? -ne 0 ]; do
         sleep $DELAY_BETWEEN_REQUESTS;
     done;
+    rm -rf /tmp/databutton
     echo "success with package: $PACKAGE_NAME@$PACKAGE_VERSION"'
