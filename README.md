@@ -40,7 +40,7 @@ jobs:
       uses: databutton/wait-for-pypi@main
       with:
         package_name: my-package
-        version: ${{ steps.release.outputs.version }}
+        package_version: ${{ steps.release.outputs.version }}
 
     # This runs after the pip package is available, so you can now push the docker image
     - name: Release on dockerhub
