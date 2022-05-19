@@ -15,9 +15,7 @@ DELAY_BETWEEN_REQUESTS=$DELAY_BETWEEN_REQUESTS \
   FOUND=0 \
   timeout \
   --foreground -s TERM $TIMEOUT bash -c \
-    'while [[ $FOUND -eq 0 ]]; do
-        FOUND=$(curl -s -L ${URL} | grep "$PACKAGE_VERSION" | wc -l)
-        echo "found: $FOUND"
+    'while pip download $PACKAGE_NAME==$PACKAGE_VERSION --no-deps -d /tmp/databutton; [ $? -ne 0 ]; do
         sleep $DELAY_BETWEEN_REQUESTS;
     done;
     echo "success with package: $PACKAGE_NAME@$PACKAGE_VERSION"'
