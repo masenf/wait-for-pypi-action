@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -x
 
 PACKAGE_NAME=$1
 PACKAGE_VERSION=$2
@@ -19,4 +19,5 @@ function check_pip() {
   fi
 }
 
+pip install --upgrade pip
 check_pip

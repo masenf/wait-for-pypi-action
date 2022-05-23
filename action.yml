@@ -18,6 +18,10 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Installing python
+    - uses: actions/setup-python@v3
+      with:
+        python-version: 3.9
     - name: Waiting for ${{ inputs.package_name }}==${{ inputs.version }}
       run: |
           $GITHUB_ACTION_PATH/wait_for_pypi.sh \
