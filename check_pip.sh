@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 PACKAGE_NAME=$1
 PACKAGE_VERSION=$2
 TIMEOUT=${3-30}
