@@ -37,7 +37,7 @@ jobs:
       run: ./release-sh
 
     - name: Wait for package to become available
-      uses: databutton/wait-for-pypi@main
+      uses: databutton/wait-for-pypi-action@main
       with:
         package_name: my-package
         package_version: ${{ steps.release.outputs.version }}
