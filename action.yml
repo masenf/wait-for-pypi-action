@@ -21,7 +21,7 @@ runs:
     - name: Installing python
       uses: actions/setup-python@v3
       with:
-        python-version: 3.9
+        python-version: 3.13
     - name: Waiting for ${{ inputs.package_name }}==${{ inputs.version }}
       run: |
           $GITHUB_ACTION_PATH/wait_for_pypi.sh \
